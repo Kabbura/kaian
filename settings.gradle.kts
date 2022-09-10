@@ -1,6 +1,6 @@
-rootProject.name = "narcore"
+rootProject.name = "kaian"
 
-include(":narcore-server")
-include(":narcore-web")
+include(":kaian-server")
+include(":kaian-web")
 include(":dto-web")
 

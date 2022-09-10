@@ -16,9 +16,9 @@ plugins {
 }
 
 tasks.register("buildRelease") {
-    val outputJarName = "narcore"
-    val serverProjectName = "narcore-server"
-    val webProjectName = "narcore-web"
+    val outputJarName = "kaian"
+    val serverProjectName = "kaian-server"
+    val webProjectName = "kaian-web"
     dependsOn(":$serverProjectName:jar")
     dependsOn(":$webProjectName:build")
     doLast {

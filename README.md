@@ -4,11 +4,11 @@ To run the project, you need to run the server and the frontend.
 
 ### Running the server
 
-In the terminal, run `./gradlew narcore-server:run`
+In the terminal, run `./gradlew kaian-server:run`
 
 ### Running the frontend
 
-In the terminal, run `./gradlew :narcore-web:run -t`
+In the terminal, run `./gradlew :kaian-web:run -t`
 
 ## Understanding the codebase
 
