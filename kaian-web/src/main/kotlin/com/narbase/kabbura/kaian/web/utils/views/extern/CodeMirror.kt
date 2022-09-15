@@ -15,12 +15,20 @@ external object CmState {
     object EditorState {
         fun create(options: dynamic): dynamic
     }
+
+    class Compartment {
+        fun of(options: dynamic): dynamic
+        fun reconfigure(options: dynamic): dynamic
+    }
 }
 
 @JsModule("@codemirror/view")
 @JsNonModule
 external object CmView {
-    class EditorView(options: dynamic)
+    class EditorView(options: dynamic) {
+        val state: dynamic
+        fun dispatch(options: dynamic): dynamic
+    }
 
     val keymap: dynamic
     fun lineNumbers(): dynamic
@@ -60,6 +68,12 @@ external object CmAutocomplete {
 @JsNonModule
 external object Cm {
     val basicSetup: dynamic
+}
+
+@JsModule("@codemirror/lang-lezer")
+@JsNonModule
+external object CmLezer {
+    fun lezer(): dynamic
 }
 
 

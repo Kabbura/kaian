@@ -1,5 +1,6 @@
 package com.narbase.kabbura.kaian.web.views.basePage
 
+import com.narbase.kabbura.kaian.web.common.AppColors
 import com.narbase.kabbura.kaian.web.utils.views.extern.*
 import com.narbase.kabbura.kaian.web.utils.views.extern.CmAutocomplete.completeFromList
 import com.narbase.kabbura.kaian.web.utils.views.extern.CmLanguage.foldInside
@@ -27,6 +28,8 @@ import kotlin.js.json
  * On: 2022/09/15.
  */
 class CodeEditor : Component() {
+    private lateinit var editor: CmView.EditorView
+    private val languageCompartment by lazy { CmState.Compartment() }
 
     override fun onViewCreated(lifecycleOwner: LifecycleOwner) {
         super.onViewCreated(lifecycleOwner)
@@ -37,22 +40,55 @@ class CodeEditor : Component() {
         style {
             width = matchParent
             minHeight = 300.px
-            border = "1px solid red"
+            border = "1px solid ${AppColors.borderColor}"
         }
     }
 
     private fun init() {
-        val parser = LezerGenerator.buildParser(grammer, json())
+        val rootView = rootView
+        if (rootView == null) {
+            console.log("Root view is null")
+            return
+        }
+
+        editor = CmView.EditorView(
+            json(
+                "state" to CmState.EditorState.create(
+                    json(
+                        "doc" to initialDocContent,
+                        "extensions" to arrayOf(
+                            languageCompartment.of(arrayOf<dynamic>()),
+                            Cm.basicSetup,
+                        )
+                    )
+                ),
+                "parent" to rootView.element
+            )
+        )
+    }
+
+    fun updateLanguageSupport(grammar: String) {
+        val support = generateLanguageSupport(grammar)
+        editor.dispatch(
+            json(
+                "effects" to languageCompartment.reconfigure(support)
+            )
+        )
+    }
+
+    private fun generateLanguageSupport(grammar: String): CmLanguage.LanguageSupport {
+        val parser = LezerGenerator.buildParser(grammar, json())
 
         val exampleLanguage = CmLanguage.LRLanguage.define(
             json(
-                "parser" to parser.configure(json(
-                    "props" to arrayOf(
-                        styleTags(
-                            json(
-                                "Identifier" to tags.variableName,
-                                "Boolean" to tags.bool,
-                                "String" to tags.string,
+                "parser" to parser.configure(
+                    json(
+                        "props" to arrayOf(
+                            styleTags(
+                                json(
+                                    "Identifier" to tags.variableName,
+                                    "Boolean" to tags.bool,
+                                    "String" to tags.string,
                                 "LineComment" to tags.lineComment,
                                 "( )" to tags.paren
                             )
@@ -89,36 +125,7 @@ class CodeEditor : Component() {
             )
         )
 
-        val languageSupport = CmLanguage.LanguageSupport(exampleLanguage, arrayOf(exampleCompletion))
-        console.log("languageSupport")
-        console.log(languageSupport)
-
-        val rootView = rootView
-        if (rootView == null) {
-            console.log("Root view is null")
-            return
-        }
-
-
-        val view = CmView.EditorView(
-            json(
-                "state" to CmState.EditorState.create(
-                    json(
-                        "doc" to initialDocContent,
-                        "extensions" to arrayOf(
-//                            CmView.keymap.of(CmCommands.defaultKeymap),
-                            languageSupport,
-//                            CmView.lineNumbers(),
-                            Cm.basicSetup,
-                        )
-                    )
-                ),
-                "parent" to rootView.element
-            )
-        )
-
-        console.log("view")
-        console.log(view)
+        return CmLanguage.LanguageSupport(exampleLanguage, arrayOf(exampleCompletion))
     }
 
     private val initialDocContent = """
@@ -127,32 +134,4 @@ class CodeEditor : Component() {
     (equal password "12345")
     #t))
     """
-    private val grammer = """
-@top Program { expression* }
-
-expression {
-  Identifier |
-  String |
-  Boolean |
-  Application { "(" expression* ")" }
-}
-
-@tokens {
-  Identifier { ${'$'}[a-zA-Z_0-9]+ }
-
-  String { '"' (!["\\] | "\\" _)* '"' }
-
-  Boolean { "#t" | "#f" }
-
-  LineComment { ";" ![\n]* }
-
-  space { ${'$'}[ \t\n\r]+ }
-
-  "(" ")"
-}
-
-@skip { space | LineComment }
-@detectDelim
-
-    """.trimIndent()
 }

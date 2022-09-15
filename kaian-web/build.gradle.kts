@@ -37,6 +37,8 @@ dependencies {
     implementation(npm("@codemirror/language", "6.2.1"))
     implementation(npm("@codemirror/autocomplete", "6.2.0"))
 
+    implementation(npm("@codemirror/lang-lezer", "6.0.0"))
+
     implementation(npm("@lezer/common", "1.0.1"))
     implementation(npm("@lezer/lr", "1.2.3"))
     implementation(npm("@lezer/highlight", "1.0.0"))

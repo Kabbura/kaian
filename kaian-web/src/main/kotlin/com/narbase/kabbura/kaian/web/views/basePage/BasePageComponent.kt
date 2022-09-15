@@ -15,7 +15,6 @@ import com.narbase.kabbura.kaian.web.utils.horizontalFiller
 import com.narbase.kabbura.kaian.web.utils.logoutUser
 import com.narbase.kabbura.kaian.web.utils.notifications.NotificationsController
 import com.narbase.kabbura.kaian.web.utils.session.authorized
-import com.narbase.kabbura.kaian.web.utils.verticalFiller
 import com.narbase.kabbura.kaian.web.utils.views.pointerCursor
 import com.narbase.kabbura.kaian.web.utils.views.tooltip
 import com.narbase.kabbura.kaian.web.views.admin.AdminPageComponent
@@ -315,17 +314,42 @@ class BasePageComponent(
                     width = matchParent
                     padding = 16.px
                 }
-
-                textView {
+                horizontalLayout {
                     style {
-                        fontSize = 32.px
-                        color = AppColors.kaianColor
-                        padding = 32.px
+                        width = matchParent
                     }
-                    text = "Hello, world"
+
+                    val lezerCodeEditor = LezerCodeEditor()
+                    val codeEditor = CodeEditor()
+                    verticalLayout {
+                        style {
+                            width = weightOf(1)
+
+                        }
+                        mount(lezerCodeEditor)
+                    }
+
+                    verticalLayout {
+                        style {
+                            padding = 4.px
+                        }
+
+                        button {
+                            text = "Load"
+                            onClick = {
+                                codeEditor.updateLanguageSupport(lezerCodeEditor.getContent())
+                            }
+                        }
+                    }
+
+                    verticalLayout {
+                        style {
+                            width = weightOf(1)
+
+                        }
+                        mount(codeEditor)
+                    }
                 }
-                verticalFiller(16)
-                mount(CodeEditor())
             }
         }
         routeComponent(AdminPageComponent.routeDetails.href, isExact = false) { adminPageComponent }
