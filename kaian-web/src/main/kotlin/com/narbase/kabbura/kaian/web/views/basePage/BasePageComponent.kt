@@ -1,19 +1,5 @@
 package com.narbase.kabbura.kaian.web.views.basePage
 
-import com.narbase.kunafa.core.components.*
-import com.narbase.kunafa.core.components.layout.LinearLayout
-import com.narbase.kunafa.core.css.*
-import com.narbase.kunafa.core.dimensions.dependent.matchParent
-import com.narbase.kunafa.core.dimensions.dependent.weightOf
-import com.narbase.kunafa.core.dimensions.dimen
-import com.narbase.kunafa.core.dimensions.percent
-import com.narbase.kunafa.core.dimensions.px
-import com.narbase.kunafa.core.drawable.Color
-import com.narbase.kunafa.core.lifecycle.LifecycleOwner
-import com.narbase.kunafa.core.routing.Router
-import com.narbase.kunafa.core.routing.redirect
-import com.narbase.kunafa.core.routing.route
-import com.narbase.kunafa.core.routing.routeComponent
 import com.narbase.kabbura.kaian.dto.models.roles.Privilege
 import com.narbase.kabbura.kaian.web.common.AppColors
 import com.narbase.kabbura.kaian.web.common.AppFontSizes
@@ -29,10 +15,25 @@ import com.narbase.kabbura.kaian.web.utils.horizontalFiller
 import com.narbase.kabbura.kaian.web.utils.logoutUser
 import com.narbase.kabbura.kaian.web.utils.notifications.NotificationsController
 import com.narbase.kabbura.kaian.web.utils.session.authorized
+import com.narbase.kabbura.kaian.web.utils.verticalFiller
 import com.narbase.kabbura.kaian.web.utils.views.pointerCursor
 import com.narbase.kabbura.kaian.web.utils.views.tooltip
 import com.narbase.kabbura.kaian.web.views.admin.AdminPageComponent
 import com.narbase.kabbura.kaian.web.views.user.profile.UserProfileComponent
+import com.narbase.kunafa.core.components.*
+import com.narbase.kunafa.core.components.layout.LinearLayout
+import com.narbase.kunafa.core.css.*
+import com.narbase.kunafa.core.dimensions.dependent.matchParent
+import com.narbase.kunafa.core.dimensions.dependent.weightOf
+import com.narbase.kunafa.core.dimensions.dimen
+import com.narbase.kunafa.core.dimensions.percent
+import com.narbase.kunafa.core.dimensions.px
+import com.narbase.kunafa.core.drawable.Color
+import com.narbase.kunafa.core.lifecycle.LifecycleOwner
+import com.narbase.kunafa.core.routing.Router
+import com.narbase.kunafa.core.routing.redirect
+import com.narbase.kunafa.core.routing.route
+import com.narbase.kunafa.core.routing.routeComponent
 import disableBlurOptions
 import kotlinx.browser.document
 import kotlinx.browser.window
@@ -310,6 +311,11 @@ class BasePageComponent(
 
         route("/home") {
             verticalLayout {
+                style {
+                    width = matchParent
+                    padding = 16.px
+                }
+
                 textView {
                     style {
                         fontSize = 32.px
@@ -318,6 +324,8 @@ class BasePageComponent(
                     }
                     text = "Hello, world"
                 }
+                verticalFiller(16)
+                mount(CodeEditor())
             }
         }
         routeComponent(AdminPageComponent.routeDetails.href, isExact = false) { adminPageComponent }

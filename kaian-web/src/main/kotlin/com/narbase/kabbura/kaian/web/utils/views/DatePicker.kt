@@ -2,6 +2,11 @@
 
 package com.narbase.kabbura.kaian.web.utils.views
 
+import com.narbase.kabbura.kaian.web.common.AppColors
+import com.narbase.kabbura.kaian.web.common.AppFontSizes
+import com.narbase.kabbura.kaian.web.storage.StorageManager
+import com.narbase.kabbura.kaian.web.utils.PopupZIndex
+import com.narbase.kabbura.kaian.web.utils.colors.gray
 import com.narbase.kunafa.core.components.View
 import com.narbase.kunafa.core.css.*
 import com.narbase.kunafa.core.dimensions.dependent.matchParent
@@ -10,11 +15,6 @@ import com.narbase.kunafa.core.dimensions.dimen
 import com.narbase.kunafa.core.dimensions.percent
 import com.narbase.kunafa.core.dimensions.px
 import com.narbase.kunafa.core.drawable.Color
-import com.narbase.kabbura.kaian.web.common.AppColors
-import com.narbase.kabbura.kaian.web.common.AppFontSizes
-import com.narbase.kabbura.kaian.web.storage.StorageManager
-import com.narbase.kabbura.kaian.web.utils.PopupZIndex
-import com.narbase.kabbura.kaian.web.utils.colors.gray
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLInputElement
 import kotlin.js.Date
@@ -217,8 +217,8 @@ class I18n(
     val weekdaysShort: Array<String>
 )
 
-@JsModule("pikaday")
-@JsNonModule
+//@JsModule("pikaday")
+//@JsNonModule
 external class Pikaday(params: dynamic) {
     fun setDate(date: Date, preventOnSelect: Boolean): Unit
 }

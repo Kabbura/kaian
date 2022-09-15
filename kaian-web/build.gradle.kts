@@ -27,8 +27,19 @@ dependencies {
     implementation(npm("file-loader", "5.0.2"))
     implementation(npm("typeface-open-sans", "0.0.75"))
     implementation(npm("tippy.js", "4.3.4"))
-    implementation(npm("pikaday", "1.8.0"))
+//    implementation(npm("pikaday", "1.8.0"))
     implementation(npm("flatpickr", "4.6.3"))
+
+    implementation(npm("@codemirror/state", "6.1.1"))
+    implementation(npm("@codemirror/view", "6.2.3"))
+    implementation(npm("@codemirror/commands", "6.1.0"))
+//    implementation(npm("@codemirror/language", "6.2.1"))
+//    implementation(npm("@codemirror/autocomplete", "6.2.0"))
+
+//    implementation(npm("@lezer/common", "1.0.1"))
+//    implementation(npm("@lezer/lr", "1.2.3"))
+//    implementation(npm("@lezer/highlight", "1.0.0"))
+//    implementation(npm("@lezer/generator", "1.1.1"))
 
     testImplementation("org.jetbrains.kotlin:kotlin-test-js:$kotlinVersion")
 
@@ -46,6 +57,15 @@ kotlin {
 //                    useChromeHeadless()
                 }
             }
+        }
+        compilations["main"].packageJson {
+            customField(
+                "resolutions", mapOf(
+                    "@codemirror/state" to "6.1.1",
+                    "@codemirror/view" to "6.2.3",
+                    "@codemirror/commands" to "6.1.0",
+                )
+            )
         }
 
         compilations.all {
