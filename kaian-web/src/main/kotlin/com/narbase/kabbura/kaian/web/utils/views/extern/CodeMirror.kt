@@ -23,6 +23,7 @@ external object CmView {
     class EditorView(options: dynamic)
 
     val keymap: dynamic
+    fun lineNumbers(): dynamic
 }
 
 @JsModule("@codemirror/commands")
@@ -32,10 +33,34 @@ external object CmCommands {
 }
 
 
-//@JsModule("@lezer/generator")
-//@JsNonModule
-//external object LezerGenerator {
-//    fun buildParser(text: String, option: dynamic): dynamic
-//}
+@JsModule("@codemirror/language")
+@JsNonModule
+external object CmLanguage {
+    val defaultKeymap: dynamic
+    val foldNodeProp: dynamic
+    val foldInside: dynamic
+    val indentNodeProp: dynamic
+
+    object LRLanguage {
+        fun define(options: dynamic): dynamic
+    }
+
+    class LanguageSupport(lang: dynamic, options: dynamic)
+}
+
+
+@JsModule("@codemirror/autocomplete")
+@JsNonModule
+external object CmAutocomplete {
+    fun completeFromList(options: dynamic): dynamic
+}
+
+
+@JsModule("codemirror")
+@JsNonModule
+external object Cm {
+    val basicSetup: dynamic
+}
+
 
 
