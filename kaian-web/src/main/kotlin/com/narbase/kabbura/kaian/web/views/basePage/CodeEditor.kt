@@ -12,10 +12,9 @@ import com.narbase.kunafa.core.components.Component
 import com.narbase.kunafa.core.components.View
 import com.narbase.kunafa.core.components.view
 import com.narbase.kunafa.core.css.border
-import com.narbase.kunafa.core.css.minHeight
+import com.narbase.kunafa.core.css.height
 import com.narbase.kunafa.core.css.width
 import com.narbase.kunafa.core.dimensions.dependent.matchParent
-import com.narbase.kunafa.core.dimensions.px
 import com.narbase.kunafa.core.lifecycle.LifecycleOwner
 import kotlin.js.json
 
@@ -39,7 +38,7 @@ class CodeEditor : Component() {
     override fun View?.getView() = view {
         style {
             width = matchParent
-            minHeight = 300.px
+            height = matchParent
             border = "1px solid ${AppColors.borderColor}"
         }
     }

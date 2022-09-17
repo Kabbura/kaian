@@ -313,10 +313,12 @@ class BasePageComponent(
                 style {
                     width = matchParent
                     padding = 16.px
+                    height = matchParent
                 }
                 horizontalLayout {
                     style {
                         width = matchParent
+                        height = matchParent
                     }
 
                     val lezerCodeEditor = LezerCodeEditor()
@@ -324,6 +326,7 @@ class BasePageComponent(
                     verticalLayout {
                         style {
                             width = weightOf(1)
+                            height = matchParent
 
                         }
                         mount(lezerCodeEditor)
@@ -345,6 +348,7 @@ class BasePageComponent(
                     verticalLayout {
                         style {
                             width = weightOf(1)
+                            height = matchParent
 
                         }
                         mount(codeEditor)

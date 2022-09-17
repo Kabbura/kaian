@@ -1,12 +1,5 @@
 package com.narbase.kabbura.kaian.web
 
-import com.narbase.kunafa.core.components.Component
-import com.narbase.kunafa.core.components.View
-import com.narbase.kunafa.core.components.verticalLayout
-import com.narbase.kunafa.core.css.*
-import com.narbase.kunafa.core.dimensions.dependent.matchParent
-import com.narbase.kunafa.core.lifecycle.LifecycleOwner
-import com.narbase.kunafa.core.routing.Router
 import com.narbase.kabbura.kaian.web.login.LoginPageContent
 import com.narbase.kabbura.kaian.web.storage.StorageManager
 import com.narbase.kabbura.kaian.web.utils.eventbus.EventBus
@@ -14,6 +7,15 @@ import com.narbase.kabbura.kaian.web.utils.notifications.NotificationsController
 import com.narbase.kabbura.kaian.web.views.basePage.BasePageComponent
 import com.narbase.kabbura.kaian.web.views.basePage.BasePageViewModel
 import com.narbase.kabbura.kaian.web.views.startup.StartupComponent
+import com.narbase.kunafa.core.components.Component
+import com.narbase.kunafa.core.components.View
+import com.narbase.kunafa.core.components.verticalLayout
+import com.narbase.kunafa.core.css.*
+import com.narbase.kunafa.core.dimensions.dependent.matchParent
+import com.narbase.kunafa.core.dimensions.percent
+import com.narbase.kunafa.core.dimensions.px
+import com.narbase.kunafa.core.lifecycle.LifecycleOwner
+import com.narbase.kunafa.core.routing.Router
 import kotlinx.browser.window
 
 class AppComponent(
@@ -37,6 +39,16 @@ class AppComponent(
         stringRuleSet("textarea::-webkit-scrollbar") {
             display = "initial"
         }
+
+        defineCodeMirrorGlobalStyles()
+    }
+
+    fun defineCodeMirrorGlobalStyles() {
+        stringRuleSet(".cm-content, .cm-gutter") { minHeight = 150.px }
+//        stringRuleSet(".cm-gutters") { margin = 1.px }
+        stringRuleSet(".cm-scroller") { overflow = "auto" }
+        stringRuleSet(".cm-wrap") { border = "1px solid silver" }
+        stringRuleSet(".cm-editor") { height = 100.percent }
     }
 
     override fun onViewMounted(lifecycleOwner: LifecycleOwner) {
