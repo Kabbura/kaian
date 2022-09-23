@@ -1,6 +1,7 @@
 package com.narbase.kabbura.kaian.web.views.basePage
 
 import com.narbase.kabbura.kaian.web.common.AppColors
+import com.narbase.kabbura.kaian.web.storage.StoredStringValue
 import com.narbase.kabbura.kaian.web.utils.views.extern.Cm
 import com.narbase.kabbura.kaian.web.utils.views.extern.CmLezer
 import com.narbase.kabbura.kaian.web.utils.views.extern.CmState
@@ -26,6 +27,7 @@ import kotlin.js.json
 class LezerCodeEditor : Component() {
 
     private lateinit var editor: CmView.EditorView
+    private var savedContent by StoredStringValue("${this::class}Content")
     override fun onViewCreated(lifecycleOwner: LifecycleOwner) {
         super.onViewCreated(lifecycleOwner)
         init()
@@ -51,7 +53,7 @@ class LezerCodeEditor : Component() {
             json(
                 "state" to CmState.EditorState.create(
                     json(
-                        "doc" to initialDocContent,
+                        "doc" to (savedContent?.takeUnless { it.isBlank() } ?: initialDocContent),
                         "extensions" to arrayOf(
                             Cm.basicSetup,
                             CmLezer.lezer()
@@ -67,6 +69,11 @@ class LezerCodeEditor : Component() {
     fun getContent(): String {
         return editor.state.doc.toString()
     }
+
+    fun saveContent() {
+        savedContent = getContent()
+    }
+
 
     private val initialDocContent = """
 @top Program { expression* }

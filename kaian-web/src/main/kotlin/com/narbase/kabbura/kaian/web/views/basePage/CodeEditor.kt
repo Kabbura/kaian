@@ -1,6 +1,7 @@
 package com.narbase.kabbura.kaian.web.views.basePage
 
 import com.narbase.kabbura.kaian.web.common.AppColors
+import com.narbase.kabbura.kaian.web.storage.StoredStringValue
 import com.narbase.kabbura.kaian.web.utils.views.extern.*
 import com.narbase.kabbura.kaian.web.utils.views.extern.CmAutocomplete.completeFromList
 import com.narbase.kabbura.kaian.web.utils.views.extern.CmLanguage.foldInside
@@ -29,6 +30,8 @@ import kotlin.js.json
 class CodeEditor : Component() {
     private lateinit var editor: CmView.EditorView
     private val languageCompartment by lazy { CmState.Compartment() }
+    private var savedContent by StoredStringValue("${this::class}Content")
+    private var parser: dynamic = null
 
     override fun onViewCreated(lifecycleOwner: LifecycleOwner) {
         super.onViewCreated(lifecycleOwner)
@@ -54,7 +57,8 @@ class CodeEditor : Component() {
             json(
                 "state" to CmState.EditorState.create(
                     json(
-                        "doc" to initialDocContent,
+//                        "doc" to initialDocContent,
+                        "doc" to (savedContent?.takeUnless { it.isBlank() } ?: initialDocContent),
                         "extensions" to arrayOf(
                             languageCompartment.of(arrayOf<dynamic>()),
                             Cm.basicSetup,
@@ -75,8 +79,25 @@ class CodeEditor : Component() {
         )
     }
 
+    fun getContent(): String {
+        return editor.state.doc.toString()
+    }
+
+    fun getContent(cursor: dynamic): String {
+        return editor.state.doc.sliceString(cursor.from, cursor.to)
+    }
+
+    fun saveContent() {
+        savedContent = getContent()
+    }
+
+    fun getTree(): dynamic {
+        return parser.parse(getContent())
+    }
+
+
     private fun generateLanguageSupport(grammar: String): CmLanguage.LanguageSupport {
-        val parser = LezerGenerator.buildParser(grammar, json())
+        parser = LezerGenerator.buildParser(grammar, json())
 
         val exampleLanguage = CmLanguage.LRLanguage.define(
             json(
@@ -88,9 +109,9 @@ class CodeEditor : Component() {
                                     "Identifier" to tags.variableName,
                                     "Boolean" to tags.bool,
                                     "String" to tags.string,
-                                "LineComment" to tags.lineComment,
-                                "( )" to tags.paren
-                            )
+                                    "LineComment" to tags.lineComment,
+                                    "( )" to tags.paren,
+                                )
                         ),
                         indentNodeProp.add(
                             json(

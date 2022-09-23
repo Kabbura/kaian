@@ -44,6 +44,7 @@ class BasePageComponent(
     private val basePageViewModel: BasePageViewModel
 ) : Component() {
 
+    private var loadButton: Button? = null
     private var serverConnectionStatusIndicator: View? = null
 
     private var mainContainer: LinearLayout? = null
@@ -67,6 +68,7 @@ class BasePageComponent(
     override fun onViewMounted(lifecycleOwner: LifecycleOwner) {
         super.onViewMounted(lifecycleOwner)
         onServerConnectionUpdated(NotificationsController.isConnectedToServer)
+        loadButton?.element?.click()
     }
 
     override fun View?.getView() = verticalLayout {
@@ -323,6 +325,7 @@ class BasePageComponent(
 
                     val lezerCodeEditor = LezerCodeEditor()
                     val codeEditor = CodeEditor()
+                    val visualiser = TreeVisualiser(lezerCodeEditor, codeEditor)
                     verticalLayout {
                         style {
                             width = weightOf(1)
@@ -337,10 +340,13 @@ class BasePageComponent(
                             padding = 4.px
                         }
 
-                        button {
+                        loadButton = button {
                             text = "Load"
                             onClick = {
                                 codeEditor.updateLanguageSupport(lezerCodeEditor.getContent())
+                                lezerCodeEditor.saveContent()
+                                codeEditor.saveContent()
+                                visualiser.visualise()
                             }
                         }
                     }
@@ -352,6 +358,15 @@ class BasePageComponent(
 
                         }
                         mount(codeEditor)
+                    }
+
+                    verticalLayout {
+                        style {
+                            width = weightOf(1)
+                            height = matchParent
+
+                        }
+                        mount(visualiser)
                     }
                 }
             }
