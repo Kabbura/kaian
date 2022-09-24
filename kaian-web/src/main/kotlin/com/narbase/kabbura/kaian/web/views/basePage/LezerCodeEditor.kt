@@ -75,44 +75,47 @@ class LezerCodeEditor : Component() {
     }
 
 
-    private val initialDocContent = """
-@top Program { expression* }
+    private val initialDocContent =
+        """@top Program { topLevelExpression* }
 
-expression {
-  Identifier |
-  String |
-  Boolean |
-  Application { "(" expression* ")" } |
-  ModelDefinition |
-  PropertyDefinition
+topLevelExpression {
+  ModelDefinition
 }
 
 ModelDefinition {
-  @specialize<Identifier, "model"> Identifier ( "{" ProperyDefinition* "}" )?
+  kw<"model"> ModelName (PropertyBody)?
 }
 
 PropertyDefinition {
-  Identifier ":" Identifier
+  PropertyIdentifier ":" ( PropertyType | PropertyBody)
 }
 
+PropertyIdentifier {
+  identifier |
+  PropertyArrayIdentifier {("[" identifier "]")}
+}
+PropertyBody {
+  "{" PropertyDefinition* "}"
+}
+ModelName { identifier }
+PropertyType { identifier }
+
+kw<term> { @specialize[@name={term}]<identifier, term> }
+
 @tokens {
-  Identifier { ${'$'}[a-zA-Z_0-9]+ }
+  identifier { ${'$'}[a-zA-Z_0-9]+ }
 
   String { '"' (!["\\] | "\\" _)* '"' }
 
   Boolean { "#t" | "#f" }
 
-  LineComment { ";" ![\n]* }
+  LineComment { "//" ![\n]* }
 
   space { ${'$'}[ \t\n\r]+ }
-
-  "(" ")"
 }
 
 @skip { space | LineComment }
 @detectDelim
-
-    
 
     """.trimIndent()
 }

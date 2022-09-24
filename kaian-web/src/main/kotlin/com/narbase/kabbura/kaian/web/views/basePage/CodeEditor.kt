@@ -106,7 +106,11 @@ class CodeEditor : Component() {
                         "props" to arrayOf(
                             styleTags(
                                 json(
-                                    "Identifier" to tags.variableName,
+                                    "model " to tags.keyword,
+//                                    "Keyword " to tags.keyword,
+                                    "ModelName " to tags.className,
+                                    "PropertyIdentifier " to tags.propertyName,
+                                    "PropertyType " to tags.typeName,
                                     "Boolean" to tags.bool,
                                     "String" to tags.string,
                                     "LineComment" to tags.lineComment,
@@ -149,9 +153,14 @@ class CodeEditor : Component() {
     }
 
     private val initialDocContent = """
-(defun check-login (name password) ; absolutely secure
-  (if (equal name "admin")
-    (equal password "12345")
-    #t))
+model Site {
+    Street: Text
+    City: Text
+    Task: {
+         Name: Text
+         Assignee: User
+    }
+    [Address]: Text
+}
     """
 }
