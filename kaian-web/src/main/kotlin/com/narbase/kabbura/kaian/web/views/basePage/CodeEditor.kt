@@ -109,7 +109,7 @@ class CodeEditor : Component() {
                                     "model " to tags.keyword,
                                     "ModelName " to tags.className,
                                     "PropertyName " to tags.propertyName,
-                                    "PropertyType " to tags.typeName,
+                                    "PropertyTypeSingle " to tags.typeName,
                                     "True" to tags.bool,
                                     "False" to tags.bool,
                                     "String" to tags.string,
