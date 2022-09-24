@@ -107,9 +107,8 @@ class CodeEditor : Component() {
                             styleTags(
                                 json(
                                     "model " to tags.keyword,
-//                                    "Keyword " to tags.keyword,
                                     "ModelName " to tags.className,
-                                    "PropertyIdentifier " to tags.propertyName,
+                                    "PropertyName " to tags.propertyName,
                                     "PropertyType " to tags.typeName,
                                     "Boolean" to tags.bool,
                                     "String" to tags.string,

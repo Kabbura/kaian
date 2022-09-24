@@ -85,20 +85,22 @@ topLevelExpression {
 ModelDefinition {
   kw<"model"> ModelName (PropertyBody)?
 }
+ModelName { identifier }
 
 PropertyDefinition {
   PropertyIdentifier ":" ( PropertyType | PropertyBody)
 }
 
 PropertyIdentifier {
-  identifier |
-  PropertyArrayIdentifier {("[" identifier "]")}
+  PropertyName |
+  PropertyArrayIdentifier {("[" PropertyName "]")}
 }
 PropertyBody {
   "{" PropertyDefinition* "}"
 }
-ModelName { identifier }
+
 PropertyType { identifier }
+PropertyName { identifier }
 
 kw<term> { @specialize[@name={term}]<identifier, term> }
 
