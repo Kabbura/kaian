@@ -91,18 +91,19 @@ ModelDefinition {
 ModelName { identifier }
 
 PropertyDefinition {
-  PropertyIdentifier ":" ( PropertyType | PropertyBody)
+  PropertyName ":" ( propertyType | PropertyBody)
 }
 
-PropertyIdentifier {
-  PropertyName |
-  PropertyArrayIdentifier {("[" PropertyName "]")}
-}
 PropertyBody {
   "{" PropertyDefinition* "}"
 }
 
-PropertyType { identifier }
+propertyType { 
+  PropertyTypeSingle |  PropertyTypeArray 
+}
+PropertyTypeSingle {  identifier  }
+PropertyTypeArray {  PropertyTypeSingle "[" "]"  }
+
 PropertyName { identifier }
 
 // Instantiation
@@ -115,7 +116,7 @@ InstantiationBody {
 }
 
 PropertyValueAssignment {
-  PropertyIdentifier ":" ( PropertyValue | InstantiationBody)
+  PropertyName ":" ( PropertyValue | InstantiationBody)
 }
 
 PropertyValue { 
@@ -144,5 +145,6 @@ Boolean { True | False }
 @skip { space | LineComment }
 @detectDelim
 
+    
 """.trimIndent()
 }

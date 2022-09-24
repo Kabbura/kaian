@@ -157,18 +157,17 @@ class CodeEditor : Component() {
 
     private val initialDocContent = """
 model Site {
-    Active: Boolean
+    Street: Text
     City: Text
     Task: {
          Name: Text
          Assignee: User
     }
-    [Address]: Text
+    Address: Text[]
 }
 
 Site: {
-  Active: true
-  Street: "Kafouri Avenue"
+  Street: true
 }
 
     """

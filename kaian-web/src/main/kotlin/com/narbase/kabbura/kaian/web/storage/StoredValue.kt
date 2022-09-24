@@ -17,7 +17,7 @@ open class StoredValue<T>(
     }
 
     override fun setValue(thisRef: Any, property: KProperty<*>, value: T) {
-        console.log(value)
+//        console.log(value)
         window.localStorage.setItem(key, valueToString(value))
     }
 
