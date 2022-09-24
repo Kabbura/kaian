@@ -114,15 +114,17 @@ class CodeEditor : Component() {
                                     "String" to tags.string,
                                     "LineComment" to tags.lineComment,
                                     "( )" to tags.paren,
+                                    "[ ]" to tags.squareBracket,
+                                    "{ }" to tags.brace,
                                 )
                         ),
                         indentNodeProp.add(
                             json(
-                                "Application" to { context: dynamic -> context.column(context.node.from) + context.unit }
+                                "PropertyBody" to { context: dynamic -> context.baseIndent + context.unit }
                             )),
                         foldNodeProp.add(
                             json(
-                                "Application" to foldInside
+                                "PropertyBody" to foldInside
                             )
                         )
                     )

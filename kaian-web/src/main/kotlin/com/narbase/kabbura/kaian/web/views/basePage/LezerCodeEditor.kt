@@ -114,10 +114,13 @@ kw<term> { @specialize[@name={term}]<identifier, term> }
   LineComment { "//" ![\n]* }
 
   space { ${'$'}[ \t\n\r]+ }
+
+  "[" "]"
 }
 
 @skip { space | LineComment }
 @detectDelim
 
+    
     """.trimIndent()
 }
