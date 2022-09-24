@@ -120,7 +120,8 @@ class CodeEditor : Component() {
                         ),
                         indentNodeProp.add(
                             json(
-                                "PropertyBody" to { context: dynamic -> context.baseIndent + context.unit }
+                                "PropertyBody" to { context: dynamic -> context.baseIndent + context.unit },
+                                "InstantiationBody" to { context: dynamic -> context.baseIndent + context.unit },
                             )),
                         foldNodeProp.add(
                             json(

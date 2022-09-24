@@ -79,8 +79,11 @@ class LezerCodeEditor : Component() {
         """@top Program { topLevelExpression* }
 
 topLevelExpression {
-  ModelDefinition
+  ModelDefinition |
+  ModelInstantiation
 }
+
+// ModelDefinition
 
 ModelDefinition {
   kw<"model"> ModelName (PropertyBody)?
@@ -102,14 +105,34 @@ PropertyBody {
 PropertyType { identifier }
 PropertyName { identifier }
 
+// Instantiation
+ModelInstantiation {
+  ModelName ":" InstantiationBody
+}
+
+InstantiationBody {
+  "{" PropertyValueAssignment* "}"
+}
+
+PropertyValueAssignment {
+  PropertyIdentifier ":" ( PropertyValue | InstantiationBody)
+}
+
+PropertyValue { 
+  String |
+  Boolean
+}
+
+
 kw<term> { @specialize[@name={term}]<identifier, term> }
+True { @specialize<identifier, "TRUE" | "true"> }
+False { @specialize<identifier, "FALSE" | "false"> }
+Boolean { True | False }
 
 @tokens {
   identifier { ${'$'}[a-zA-Z_0-9]+ }
-
+  
   String { '"' (!["\\] | "\\" _)* '"' }
-
-  Boolean { "#t" | "#f" }
 
   LineComment { "//" ![\n]* }
 
@@ -121,6 +144,5 @@ kw<term> { @specialize[@name={term}]<identifier, term> }
 @skip { space | LineComment }
 @detectDelim
 
-    
-    """.trimIndent()
+""".trimIndent()
 }

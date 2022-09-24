@@ -44,8 +44,8 @@ class TreeVisualiser(val lezerCodeEditor: LezerCodeEditor, val codeEditor: CodeE
 
     fun visualise() {
         val tree = codeEditor.getTree()
-        console.log("Visualising")
-        console.log(tree)
+//        console.log("Visualising")
+//        console.log(tree)
         builder = StringBuilder()
         val cursor = tree.cursor()
 
@@ -96,7 +96,7 @@ class TreeVisualiser(val lezerCodeEditor: LezerCodeEditor, val codeEditor: CodeE
     private fun recordCursor(cursor: dynamic) {
         val type = cursor.type
         p("type: $type")
-        console.log(cursor)
+//        console.log(cursor)
         builder.append(
             "$lineIndentation${type.name}: ${
                 codeEditor.getContent(cursor).slice(0..9).replace('\n', '|')
@@ -104,5 +104,7 @@ class TreeVisualiser(val lezerCodeEditor: LezerCodeEditor, val codeEditor: CodeE
         )
     }
 
-    private fun p(any: Any) = println("$lineIndentation$any")
+    private fun p(any: Any) {
+//        println("$lineIndentation$any")
+    }
 }
