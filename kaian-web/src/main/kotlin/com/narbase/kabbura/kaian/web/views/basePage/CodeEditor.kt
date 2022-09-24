@@ -110,7 +110,8 @@ class CodeEditor : Component() {
                                     "ModelName " to tags.className,
                                     "PropertyName " to tags.propertyName,
                                     "PropertyType " to tags.typeName,
-                                    "Boolean" to tags.bool,
+                                    "True" to tags.bool,
+                                    "False" to tags.bool,
                                     "String" to tags.string,
                                     "LineComment" to tags.lineComment,
                                     "( )" to tags.paren,
@@ -156,7 +157,7 @@ class CodeEditor : Component() {
 
     private val initialDocContent = """
 model Site {
-    Street: Text
+    Active: Boolean
     City: Text
     Task: {
          Name: Text
@@ -164,5 +165,11 @@ model Site {
     }
     [Address]: Text
 }
+
+Site: {
+  Active: true
+  Street: "Kafouri Avenue"
+}
+
     """
 }
