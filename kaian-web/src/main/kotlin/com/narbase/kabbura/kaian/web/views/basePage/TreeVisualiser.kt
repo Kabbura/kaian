@@ -1,8 +1,12 @@
 package com.narbase.kabbura.kaian.web.views.basePage
 
 import com.narbase.kunafa.core.components.*
+import com.narbase.kunafa.core.css.fontSize
+import com.narbase.kunafa.core.css.height
+import com.narbase.kunafa.core.css.padding
 import com.narbase.kunafa.core.css.width
 import com.narbase.kunafa.core.dimensions.dependent.matchParent
+import com.narbase.kunafa.core.dimensions.px
 
 /*
  * NARBASE TECHNOLOGIES CONFIDENTIAL
@@ -24,12 +28,15 @@ class TreeVisualiser(val lezerCodeEditor: LezerCodeEditor, val codeEditor: CodeE
             }
         }
 
-    override fun View?.getView() = verticalLayout {
+    override fun View?.getView() = verticalScrollLayout {
         style {
             width = matchParent
+            height = matchParent
         }
         treeTextView = textView {
             style {
+                padding = 4.px
+                fontSize = 12.px
                 width = matchParent
             }
         }
