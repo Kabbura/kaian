@@ -82,7 +82,17 @@ expression {
   Identifier |
   String |
   Boolean |
-  Application { "(" expression* ")" }
+  Application { "(" expression* ")" } |
+  ModelDefinition |
+  PropertyDefinition
+}
+
+ModelDefinition {
+  @specialize<Identifier, "model"> Identifier ( "{" ProperyDefinition* "}" )?
+}
+
+PropertyDefinition {
+  Identifier ":" Identifier
 }
 
 @tokens {
@@ -101,6 +111,8 @@ expression {
 
 @skip { space | LineComment }
 @detectDelim
+
+    
 
     """.trimIndent()
 }
