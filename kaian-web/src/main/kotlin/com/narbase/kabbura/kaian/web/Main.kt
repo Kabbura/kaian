@@ -28,7 +28,6 @@ import org.w3c.dom.events.KeyboardEvent
 
 
 fun main() {
-    console.log("Hello world")
     requireAssetsForWebpack()
     Main().setup()
 
